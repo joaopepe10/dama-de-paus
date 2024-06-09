@@ -5,19 +5,30 @@ table {
 button {
     width: 150px;
     height: 50px;
+    background-color: #222;
+    color: white;
+    border: 2px solid #333;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #444;
 }
 
 .posicao {
     position: absolute;
     align-items: center;
 }
+
 /* Estilizando o tabuleiro */
 #tabuleiro {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     width: 640px;
     height: 640px;
-    border: 2px solid black;
+    border: 2px solid #000;
     margin: 20px auto;
 }
 
@@ -31,13 +42,13 @@ button {
 }
 
 .preta {
-    background-color: #8B4513;
-    color: #8B4513;
+    background-color: #333;
+    color: #333;
 }
 
 .branca {
-    background-color: #F5F5F5;
-    color: #F5F5F5;
+    background-color: #FFF;
+    color: #FFF;
 }
 
 /* Estilizando as peças */
@@ -59,8 +70,9 @@ button {
 .peca.preta {
     background-image: url('paus preto.jpg');
 }
+
 .peca.selecionada {
-    border: solid green 5px;
+    border: solid #F00 5px;
 }
 
 #jogador1 {
@@ -69,8 +81,9 @@ button {
     align-items: center;
     width: 200px;
     height: 75px;
-    background-color: black;
-    color: white;
+    background-color: #000;
+    color: #FFF;
+    border-radius: 10px;
 }
 
 #jogador2 {
@@ -79,16 +92,21 @@ button {
     align-items: center;
     width: 200px;
     height: 75px;
-    background-color: red;
-    color: white;
+    background-color: #F00;
+    color: #FFF;
+    border-radius: 10px;
 }
 
 .jogadorSelecionado {
-    border: 15px solid green;
+    border: 15px solid #00FF00;
 }
 
 #horario {
     position: fixed;
-	bottom: 3px;
-	right: 3px;
+    bottom: 3px;
+    right: 3px;
+    background-color: #000;
+    color: #FFF;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
