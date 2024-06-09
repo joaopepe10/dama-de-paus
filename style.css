@@ -1,0 +1,94 @@
+table {
+    width: 99%;
+}
+
+button {
+    width: 150px;
+    height: 50px;
+}
+
+.posicao {
+    position: absolute;
+    align-items: center;
+}
+/* Estilizando o tabuleiro */
+#tabuleiro {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 640px;
+    height: 640px;
+    border: 2px solid black;
+    margin: 20px auto;
+}
+
+/* Estilizando as casas do tabuleiro */
+.casa {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preta {
+    background-color: #8B4513;
+    color: #8B4513;
+}
+
+.branca {
+    background-color: #F5F5F5;
+    color: #F5F5F5;
+}
+
+/* Estilizando as peças */
+.peca {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.peca.vermelha {
+    background-image: url('paus vermelho.png');
+}
+
+.peca.preta {
+    background-image: url('paus preto.jpg');
+}
+.peca.selecionada {
+    border: solid green 5px;
+}
+
+#jogador1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 75px;
+    background-color: black;
+    color: white;
+}
+
+#jogador2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 75px;
+    background-color: red;
+    color: white;
+}
+
+.jogadorSelecionado {
+    border: 15px solid green;
+}
+
+#horario {
+    position: fixed;
+	bottom: 3px;
+	right: 3px;
+}
