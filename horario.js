@@ -5,7 +5,7 @@ function atualizaHorario() {
     request.open("GET", url, true);
 
     request.onreadystatechange = function() {
-        if (request.readyState == 4) {
+        if (request.readyState == 4 && request.status == 200) {
             console.log('Conteúdo carregado');
             var div_horario = document.getElementById("horario");
             div_horario.innerHTML = request.responseText;

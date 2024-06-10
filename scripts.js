@@ -23,6 +23,8 @@ class Jogo{
         }
         this.jogadorDaRodada.div.classList.add("jogadorSelecionado");
     }
+
+    
 }
 class Jogador{
     constructor(id, nome, cor){
