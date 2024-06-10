@@ -16,13 +16,7 @@
                 <div style="text-align: center">
                     <div style="">
                         <h1><spam style="color: black">Damas d</spam><spam style="color: red">e Paus</spam></h1>
-                    </div>
-                    <div id="horario">
-                        <?php
-                            date_default_timezone_set('America/Sao_Paulo');
-                            echo date("d/m/y H:i:s");
-                        ?>
-                    </div>                
+                    </div>                            
                 </div>
                 <div style="text-align: center;">
                     <button id="inicia" onclick="jogo.mudaJogador()">INICIAR JOGO</button>
