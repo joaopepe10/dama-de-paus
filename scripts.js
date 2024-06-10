@@ -1,4 +1,5 @@
 class Jogo{
+
     constructor(jogadorPretas,jogadorVermelhas, tabuleiro){
         this.jogadorPretas=jogadorPretas;
         this.jogadorVermelhas=jogadorVermelhas;
@@ -6,26 +7,125 @@ class Jogo{
         this.tabuleiro = tabuleiro;
         tabuleiro.setJogo(this);
     }
+
     inicializa(){
         this.tabuleiro.inicializa();
         this.tabuleiro.distribuiPecas();
     }
-    mudaJogador(){
-        document.getElementById("inicia").innerHTML =`TROCAR JOGADOR!`;
-        if(this.jogadorDaRodada)
+
+    verificaCapturasObrigatorias() {
+        const pecasJogador = this.jogadorDaRodada.pecas;
+        let capturaObrigatoria = false;
+
+        pecasJogador.forEach(peca => {
+            const movimentosCaptura = this.verificaMovimentosCaptura(peca);
+            if (movimentosCaptura.length > 0) {
+                capturaObrigatoria = true;
+                peca.span.classList.add('captura-obrigatoria');
+            } else {
+                peca.span.classList.remove('captura-obrigatoria');
+            }
+        });
+
+        // Destacar peças do oponente que podem ser capturadas
+        this.destacaPecasCapturaveis();
+
+        return capturaObrigatoria;
+    }
+
+    destacaPecasCapturaveis() {
+        // Remove destaques anteriores de todas as peças
+        const todasAsPecas = this.jogadorPretas.pecas.concat(this.jogadorVermelhas.pecas);
+        todasAsPecas.forEach(peca => {
+            peca.span.classList.remove('captura-obrigatoria');
+        });
+    
+        const pecasJogador = this.jogadorDaRodada.pecas;
+        const direcoes = this.jogadorDaRodada === this.jogadorPretas ? [{ dLinha: -2, dColuna: -2 }, { dLinha: -2, dColuna: 2 }] : [{ dLinha: 2, dColuna: -2 }, { dLinha: 2, dColuna: 2 }];
+    
+        pecasJogador.forEach(peca => {
+            direcoes.forEach(direcao => {
+                const linhaFutura = peca.casa.linha + direcao.dLinha;
+                const colunaFutura = peca.casa.coluna + direcao.dColuna;
+                const linhaMeio = peca.casa.linha + direcao.dLinha / 2;
+                const colunaMeio = peca.casa.coluna + direcao.dColuna / 2;
+    
+                if (linhaFutura >= 0 && linhaFutura < 8 && colunaFutura >= 0 && colunaFutura < 8) {
+                    const casaDestino = this.tabuleiro.casas[linhaFutura][colunaFutura];
+                    const casaMeio = this.tabuleiro.casas[linhaMeio][colunaMeio];
+    
+                    if (casaDestino.movimentoValido() && casaMeio.peca && this.ePecaOponente(casaMeio.peca)) {
+                        casaMeio.peca.span.classList.add('captura-obrigatoria');
+                    }
+                }
+            });
+        });
+    }
+
+    verificaMovimentosCaptura(peca) {
+        const movimentos = [];
+        const casaAtual = peca.casa;
+        const direcoes = [
+            { dLinha: 2, dColuna: 2 },
+            { dLinha: 2, dColuna: -2 },
+            { dLinha: -2, dColuna: 2 },
+            { dLinha: -2, dColuna: -2 }
+        ];
+
+        direcoes.forEach(direcao => {
+            const linhaFutura = casaAtual.linha + direcao.dLinha;
+            const colunaFutura = casaAtual.coluna + direcao.dColuna;
+            const linhaMeio = casaAtual.linha + direcao.dLinha / 2;
+            const colunaMeio = casaAtual.coluna + direcao.dColuna / 2;
+
+            if (linhaFutura >= 0 && linhaFutura < 8 && colunaFutura >= 0 && colunaFutura < 8) {
+                const casaDestino = this.tabuleiro.casas[linhaFutura][colunaFutura];
+                const casaMeio = this.tabuleiro.casas[linhaMeio][colunaMeio];
+                if (casaDestino.movimentoValido() && casaMeio.peca && this.ePecaOponente(casaMeio.peca)) {
+                    movimentos.push(casaMeio);
+                }
+            }
+        });
+
+        return movimentos;
+    }
+
+    ePecaOponente(peca) {
+        if (this.jogadorDaRodada === this.jogadorPretas) {
+            return peca.span.classList.contains('peca-vermelha');
+        } else {
+            return peca.span.classList.contains('peca-preta');
+        }
+    }
+
+    limpaCapturasObrigatorias() {
+        const pecas = this.jogadorPretas.pecas.concat(this.jogadorVermelhas.pecas);
+        pecas.forEach(peca => {
+            peca.span.classList.remove('captura-obrigatoria');
+        });
+    }
+
+    mudaJogador() {
+        document.getElementById("inicia").innerHTML = `TROCAR JOGADOR!`;
+        if (this.jogadorDaRodada)
             this.jogadorDaRodada.div.classList.remove("jogadorSelecionado");
-        if(this.jogadorPretas===this.jogadorDaRodada){
-            this.jogadorDaRodada=this.jogadorVermelhas;
-        }else if(this.jogadorVermelhas===this.jogadorDaRodada){
+        if (this.jogadorPretas === this.jogadorDaRodada) {
+            this.jogadorDaRodada = this.jogadorVermelhas;
+        } else if (this.jogadorVermelhas === this.jogadorDaRodada) {
             this.jogadorDaRodada = this.jogadorPretas;
-        }else{
+        } else {
             this.jogadorDaRodada = this.jogadorPretas;
         }
         this.jogadorDaRodada.div.classList.add("jogadorSelecionado");
-    }
 
-    
+        // Limpa capturas obrigatórias de peças do turno anterior
+        this.limpaCapturasObrigatorias();
+
+        // Verifica capturas obrigatórias ao mudar de jogador
+        this.verificaCapturasObrigatorias();
+    }
 }
+
 class Jogador{
     constructor(id, nome, cor){
         this.div = document.getElementById(id);

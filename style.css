@@ -101,18 +101,7 @@ button:hover {
     border: 15px solid #00FF00;
 }
 
-#horario {
-    bottom: 3px;
-    right: 3px;
-    background-color: #000; /* Preto */
-    color: #fff; /* Branco para o texto */
-    padding: 10px 15px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.5); /* Sombra vermelha */
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    border: 2px solid #ff0000; /* Borda vermelha */
+.captura-obrigatoria {
+    border: 3px solid red;
 }
 
