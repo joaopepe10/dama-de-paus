@@ -147,17 +147,37 @@ class Casa{
     }
 
     passoValido(linhaAtual, linhaFutura, colunaAtual, colunaFutura, tamanhoDoPasso){
-        if (linhaAtual + tamanhoDoPasso == linhaFutura && colunaAtual + tamanhoDoPasso == colunaFutura) {
-            return true;
-        } else if (linhaAtual + tamanhoDoPasso == linhaFutura && colunaAtual - tamanhoDoPasso == colunaFutura) {
-            return true;
-        } else if (linhaAtual - tamanhoDoPasso == linhaFutura && colunaAtual - tamanhoDoPasso == colunaFutura) {
-            return true;
-        } else if (linhaAtual - tamanhoDoPasso == linhaFutura && colunaAtual + tamanhoDoPasso == colunaFutura) {
-            return true;
-        }else{
-            return false;
+        let movimentoValido = false;
+    
+        if (this.tabuleiro.jogo.jogadorDaRodada.cor === "preta") {
+            // Pretas podem se mover para frente (incremento de linha)
+            if (linhaFutura - linhaAtual === tamanhoDoPasso) {
+                movimentoValido = true;
+            }
+        } else if (this.tabuleiro.jogo.jogadorDaRodada.cor === "vermelha") {
+            // Vermelhas podem se mover para frente (decremento de linha)
+            if (linhaAtual - linhaFutura === tamanhoDoPasso) {
+                movimentoValido = true;
+            }
         }
+    
+        // Verifica se a peça se move em uma das diagonais válidas
+        if (movimentoValido) {
+            if (Math.abs(colunaFutura - colunaAtual) === tamanhoDoPasso) {
+                return true;
+            }
+        }
+    
+        // Permite movimento de captura para trás
+        if (tamanhoDoPasso === 2) {
+            if (Math.abs(colunaFutura - colunaAtual) === 2) {
+                if (Math.abs(linhaFutura - linhaAtual) === 2) {
+                    return true;
+                }
+            }
+        }
+    
+        return false;
     }
 
     selecionaCasaComPecaQueSeraCapturada(linhaAtual, linhaFutura, colunaAtual, colunaFutura){
