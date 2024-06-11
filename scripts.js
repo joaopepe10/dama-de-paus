@@ -8,6 +8,15 @@ class Jogo{
         tabuleiro.setJogo(this);
     }
 
+    atualizaPlacar() {
+        const pecasPretas = document.querySelectorAll('.peca.preta');
+        const placar1 = document.getElementById('placar1');
+        placar1.textContent = pecasPretas.length;
+        const pecasVermelhas = document.querySelectorAll('.peca.vermelha');
+        const placar2 = document.getElementById('placar2');
+        placar2.textContent = pecasVermelhas.length;
+    }
+
     inicializa(){
         this.tabuleiro.inicializa();
         this.tabuleiro.distribuiPecas();
@@ -391,3 +400,4 @@ let jogadorVermelhas = new Jogador("jogador2","Jogador 2","vermelha")
 let jogo = new Jogo(jogadorPretas, jogadorVermelhas, tabuleiro);
 jogo.mudaJogador;
 jogo.inicializa();
+setInterval(jogo.atualizaPlacar, 1000);
